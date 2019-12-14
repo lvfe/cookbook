@@ -1,0 +1,17 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            菜谱
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <gridster [options]="options">
+        <gridster-item [item]="item" *ngFor="let item of dashboard">
+            <!-- your content here -->
+            <div class="itemstyle" [ngStyle]="{'background-image': 'url('+item.background+')' }"> 
+            </div>
+            <span class="itemfont">{{item.type}}</span>
+        </gridster-item>
+    </gridster>
+</ion-content>

@@ -1,5 +1,7 @@
 {
   "name": "cookbook-mobile",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
