@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
 import { HomeService } from './home.service';
 import { GridsterConfig, GridsterItem, DisplayGrid, GridType, GridsterComponent } from 'angular-gridster2';
 
@@ -13,39 +14,9 @@ export class HomeComponent {
     dashboard: Array<GridsterItem>;
     dashboardDesktop: Array<GridsterItem>;
     dashboardMobile: Array<GridsterItem>;
-    public isMobile: boolean = false;
+   
 
-    constructor(private homeService: HomeService) { }
-    gridSizeChangedCallback(GridsterComponent) {
-        if (window.innerWidth <= 480) {
-            this.isMobile = true;
-            this.dashboard = this.dashboardMobile;
-        } else {
-            this.isMobile = false;
-            this.dashboard = this.dashboardDesktop;
-        }
-    }
-
-    public itemResize(item, itemComponent) {
-        console.log('item resized', item, itemComponent);
-        if (window.innerWidth <= 480) {
-            this.isMobile = true;
-            this.dashboard = this.dashboardMobile;
-        } else {
-            this.isMobile = false;
-            this.dashboard = this.dashboardDesktop;
-        }
-    }
-
-    public initCallBack() {
-        if (window.innerWidth <= 480) {
-            this.isMobile = true;
-            this.dashboard = this.dashboardMobile;
-        } else {
-            this.isMobile = false;
-            this.dashboard = this.dashboardDesktop;
-        }
-    }
+    constructor(private homeService: HomeService, private router:Router) { }
 
     ngOnInit() {
         this.options = {
@@ -60,22 +31,24 @@ export class HomeComponent {
             fixedRowHeight: 100,
             scrollSensitivity: 10,
             scrollSpeed: 20,
-            swap: true,
-            gridSizeChangedCallback: this.gridSizeChangedCallback,
-            itemResizeCallback: this.itemResize,
-            initCallback: this.initCallBack
+            swap: true
         };
         this.dashboard = [
-            { cols: 2, rows: 2, y: 0, x: 0, type: '精选中餐', background: './assets/background/selected_chinese.jpg' },
-            { cols: 2, rows: 2, y: 0, x: 2, type: '精选西餐', background: './assets/background/selected_dish.jpg' },
-            { cols: 1, rows: 1, y: 1, x: 0, type: '白领早餐', background: './assets/background/breakfast.jpg' },
-            { cols: 1, rows: 1, y: 1, x: 1, type: '烘焙', background: './assets/background/baking.jpg' },
-            { cols: 1, rows: 1, y: 1, x: 2, type: '妈妈宝宝', background: './assets/background/mother.jpg' },
-            { cols: 1, rows: 1, y: 1, x: 3, type: '找食材', background: './assets/background/food.jpg' }
+            { cols: 2, rows: 2, y: 0, x: 0, type: '精选中餐', background: './assets/background/selected_chinese.jpg', url: '/tabs/section/selected_chinese' },
+            { cols: 2, rows: 2, y: 0, x: 2, type: '精选西餐', background: './assets/background/selected_dish.jpg', url: '/tabs/section/selected_dish' },
+            { cols: 1, rows: 1, y: 1, x: 0, type: '白领早餐', background: './assets/background/breakfast.jpg', url: '/tabs/section/breakfast' },
+            { cols: 1, rows: 1, y: 1, x: 1, type: '烘焙', background: './assets/background/baking.jpg', url: '/tabs/section/baking' },
+            { cols: 1, rows: 1, y: 1, x: 2, type: '妈妈宝宝', background: './assets/background/mother.jpg', url: '/tabs/section/mother' },
+            { cols: 1, rows: 1, y: 1, x: 3, type: '找食材', background: './assets/background/food.jpg', url: '/tabs/section/food' }
         ];
     }
 
     changeOptions() {
         this.options.api.optionsChanged();
     }
+
+    nav(item) {
+        this.router.navigate([item.url]);
+    }
+    
 }

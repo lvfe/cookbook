@@ -18,6 +18,12 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'section/:id',
+        loadChildren: () =>
+              import('../section/section.module').then(m => m.SectionModule)
+        
+      },
+      {
         path: 'tab1',
         children: [
           {

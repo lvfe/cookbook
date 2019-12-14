@@ -1,0 +1,71 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            Tab {{businessId}}
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-slides pager="true" loop="true" zoom="true" speed=250 autoplay="true" style="height:180px">
+        <ion-slide *ngFor="let item of itemsHead">
+            <div class="itemstyle" (click)="detail(item)" [ngStyle]="{'background-image': 'url('+item.picture+')' }">
+            </div>
+            <div style="position:absolute;top:0;width:100%">
+                <img style="width:30%;float:right;margin-right: 10%;height:176px;width:auto;" [src]="item.picture">
+                <div style="width:60%">
+                    <h1>{{item.title}}</h1>
+                    <p style="font-size:14px; margin-left: 10%;text-overflow: ellipsis;">{{item.desciption}}</p>
+                    <a style="font-size:14px;text-decoration: underline;" [href]="item.orignal" target="_blank">check article</a>
+                </div>
+            </div>
+        </ion-slide>
+    </ion-slides>
+    <ion-grid>
+        <ion-row>
+            <ion-col size="6" offset="1">
+                <ion-searchbar [placeholder]="'filter '+businessId" autocomplete="on" (ionChange)="changeEvent(e)"></ion-searchbar>
+            </ion-col>
+            <ion-col size="2">
+                <ion-button>
+                    <ion-label>Publish</ion-label>
+                    <ion-icon name="add-circle-outline"></ion-icon>
+                </ion-button>
+            </ion-col>
+            <ion-col size="2">
+                <ion-item>
+                    <ion-label>Edit by me</ion-label>
+                    <ion-toggle (ionChange)="editByme(e)"></ion-toggle>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+
+    <ion-title>Recommendation</ion-title>
+    <gridster [options]="options" style="background:#f4f5f8">
+        <gridster-item [item]="item" *ngFor="let item of items" style="border-radius: 10%;">
+            <div *ngIf="isMobile">
+                <ion-thumbnail slot="start">
+                    <ion-img [src]="item.picture"></ion-img>
+                </ion-thumbnail>
+                <ion-label>{{item.title}}</ion-label>
+                <p>{{item.desciption}}</p>
+                <a [href]="item.orignal" target="_blank">read more</a>
+                <p>Author By: {{item.author}}</p>
+            </div>
+            <div *ngIf="!isMobile" style="display:flex;flex-direction: column;margin-top:10px">
+                <div style="height:90px;text-align:center">
+                    <img style="height:100%" [src]="item.picture" />
+                </div>
+                <ion-label style="text-align:center">{{item.title}}</ion-label>
+                <div style="height:40px; font-size:12px;overflow: hidden; text-overflow: ellipsis;  
+                display: -webkit-box;  
+                -webkit-line-clamp: 3; margin:10px; 
+                -webkit-box-orient: vertical;  ">{{item.desciption}}
+                </div>
+                <a style="font-size:12px;margin-left:10px;" [href]="item.orignal" target="_blank">read more</a>
+                <p style="font-size:12px;margin-left:10px;">Author By: {{item.author}}</p>
+            </div>
+        </gridster-item>
+    </gridster>
+</ion-content>
